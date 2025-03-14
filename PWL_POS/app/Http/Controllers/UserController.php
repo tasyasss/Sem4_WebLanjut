@@ -10,15 +10,45 @@ class UserController extends Controller
 {
     public function index()
     {
-        // js 4 prak 2.4 Retreiving or Creating Models
-        $user = UserModel::firstOrNew([
-            'username' => 'manager33',
-            'nama' => 'Manager Tiga Tiga',
+        // js 2.5 Attribute Changes
+        $user = UserModel::create([
+            'username' => 'manager11',
+            'nama' => 'Manager11',
             'password' => Hash::make('12345'),
             'level_id' => 2
         ]);
+        $user->username = 'manager12';
         $user->save();
-        return view('user', ['data' => $user]);
+
+        $user->wasChanged();
+        $user->wasChanged('username');
+        $user->wasChanged(['username', ' level_id']);
+        $user->wasChanged('nama');
+        dd($user->wasChanged(['nama', 'username']));
+
+        // $user->isDirty();
+        // $user->isDirty('username');
+        // $user->isDirty('nama');
+        // $user->isDirty(['username', 'nama']);
+        
+        // $user->isClean();
+        // $user->isClean('username');
+        // $user->isClean('nama');
+        // $user->isClean(['username', 'nama']);
+        // $user->save();
+        // $user->isDirty();
+        // $user->isClean();
+        // dd($user->isDirty());
+
+        // // js 4 prak 2.4 Retreiving or Creating Models
+        // $user = UserModel::firstOrNew([
+        //     'username' => 'manager33',
+        //     'nama' => 'Manager Tiga Tiga',
+        //     'password' => Hash::make('12345'),
+        //     'level_id' => 2
+        // ]);
+        // $user->save();
+        // return view('user', ['data' => $user]);
 
         // $user = UserModel::firstOrCreate([
         //     'username' => 'manager22',
