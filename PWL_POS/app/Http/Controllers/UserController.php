@@ -10,10 +10,15 @@ class UserController extends Controller
 {
     public function index()
     {
+        // js 4 prak 2.3 Retreiving Aggregrates
+        $user = UserModel::where('level_id', 2)->count();
+        // dd($user);
+        return view('user', ['data' => $user]);
+
         // // js 4 prak 2.2 Not Found Exceptions
         // $user = UserModel::findOrFail(1);
-        $user = UserModel::where('username', 'manager-9')->firstOrFail();
-        return view('user', ['data' => $user]);
+        // $user = UserModel::where('username', 'manager-9')->firstOrFail();
+        // return view('use r', ['data' => $user]);
 
         // // js 4 prak 2.1 Retrieving Single Models
         // $user = UserModel::find(1);
