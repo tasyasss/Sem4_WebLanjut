@@ -23,3 +23,14 @@ Route::get('/', function () {
 Route::get('/level', [LevelController::class, 'index']);
 Route::get('/kategori', [KategoriController::class, 'index']);
 Route::get('/user', [UserController::class, 'index']);
+
+// tambah data user
+Route::get('/user/tambah', [UserController::class, 'tambah']);
+// simpan tambah data user
+Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan']);
+// ubah data user
+Route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
+// simpan ubah data user
+Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan']);
+// hapus data user
+Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
