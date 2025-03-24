@@ -12,9 +12,4 @@ class KategoriModel extends Model
     protected $primaryKey = 'kategori_id';
 
     protected $fillable = ['kategori_kode', 'kategori_nama'];
-    
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(UserModel::class);
-    }
 }

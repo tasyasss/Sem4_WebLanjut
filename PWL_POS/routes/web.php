@@ -3,8 +3,8 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\WelcomeController;
-use App\Models\KategoriModel;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,4 +55,15 @@ Route::group(['prefix' => 'kategori'], function () {
     Route::get('/{id}/edit',[KategoriController::class, 'edit']);
     Route::put('/{id}',[KategoriController::class, 'update']);
     Route::delete('/{id}',[KategoriController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'barang'], function () {
+    Route::get('/',[BarangController::class, 'index']);
+    Route::post('/list',[BarangController::class, 'list']);
+    Route::get('/create',[BarangController::class, 'create']);
+    Route::post('/',[BarangController::class, 'store']);
+    Route::get('/{id}',[BarangController::class, 'show']);
+    Route::get('/{id}/edit',[BarangController::class, 'edit']);
+    Route::put('/{id}',[BarangController::class, 'update']);
+    Route::delete('/{id}',[BarangController::class, 'destroy']);
 });
