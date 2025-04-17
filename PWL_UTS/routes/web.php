@@ -22,32 +22,27 @@ use App\Http\Controllers\BukuController;
 Route::get('/', [WelcomeController::class, 'index']);
 
 Route::group(['prefix' => 'petugas'], function () {
-Route::get('/', [PetugasController::class, 'index']);          // menampilkan halaman awal user
-Route::post('/list', [PetugasController::class, 'list']);      // menampilkan data user dlm json utk datatables
-Route::get('/create_ajax', [PetugasController::class, 'create_ajax']);   // menampilkan halaman form tambah user AJAX
-Route::post('/ajax', [PetugasController::class, 'store_ajax']);         // menampilkan data user baru AJAX
-Route::get('/{id}/show_ajax', [PetugasController::class, 'show_ajax']);       // menampilkan detail user AJAX
-Route::get('/{id}/edit_ajax', [PetugasController::class, 'edit_ajax']);     // menampilkan form perubahan data user AJAX
-Route::put('/{id}/update_ajax', [PetugasController::class, 'update_ajax']);     // menyimpan perubahan data user AJAX
-Route::get('/{id}/delete_ajax', [PetugasController::class, 'confirm_ajax']); // menampilkan form confirm delete AJAX
-Route::delete('/{id}/delete_ajax', [PetugasController::class, 'delete_ajax']); // menghapus data user AJAX
+    Route::get('/', [PetugasController::class, 'index']);          // menampilkan halaman awal user
+    Route::post('/list', [PetugasController::class, 'list']);      // menampilkan data user dlm json utk datatables
+    Route::get('/create_ajax', [PetugasController::class, 'create_ajax']);   // menampilkan halaman form tambah user AJAX
+    Route::post('/ajax', [PetugasController::class, 'store_ajax']);         // menampilkan data user baru AJAX
+    Route::get('/{id}/show_ajax', [PetugasController::class, 'show_ajax']);       // menampilkan detail user AJAX
+    Route::get('/{id}/edit_ajax', [PetugasController::class, 'edit_ajax']);     // menampilkan form perubahan data user AJAX
+    Route::put('/{id}/update_ajax', [PetugasController::class, 'update_ajax']);     // menyimpan perubahan data user AJAX
+    Route::get('/{id}/delete_ajax', [PetugasController::class, 'confirm_ajax']); // menampilkan form confirm delete AJAX
+    Route::delete('/{id}/delete_ajax', [PetugasController::class, 'delete_ajax']); // menghapus data user AJAX
 });
 
 Route::group(['prefix' => 'anggota'], function () {
     Route::get('/', [AnggotaController::class, 'index']);          // menampilkan halaman awal user
     Route::post('/list', [AnggotaController::class, 'list']);      // menampilkan data user dlm json utk datatables
-//     Route::get('/create', [AnggotaController::class, 'create']);   // menampilkan halaman form tambah user
-//     Route::post('/', [AnggotaController::class, 'store']);         // menampilkan data user baru
-//     Route::get('/create_ajax', [AnggotaController::class, 'create_ajax']);   // menampilkan halaman form tambah user AJAX
-//     Route::post('/ajax', [AnggotaController::class, 'store_ajax']);         // menampilkan data user baru AJAX
-//     Route::get('/{id}', [AnggotaController::class, 'show']);       // menampilkan detail user
-//     Route::get('/{id}/edit', [AnggotaController::class, 'edit']);  // menampilkan halaman form ubah user
-//     Route::put('/{id}', [AnggotaController::class, 'update']);     // menyimpan perubahan data user
-//     Route::get('/{id}/edit_ajax', [AnggotaController::class, 'edit_ajax']);     // menampilkan form perubahan data user AJAX
-//     Route::put('/{id}/update_ajax', [AnggotaController::class, 'update_ajax']);     // menyimpan perubahan data user AJAX
-//     Route::delete('/{id}', [AnggotaController::class, 'destroy']); // menghapus data user
-//     Route::get('/{id}/delete_ajax', [AnggotaController::class, 'confirm_ajax']); // menampilkan form confirm delete AJAX
-//     Route::delete('/{id}/delete_ajax', [AnggotaController::class, 'delete_ajax']); // menghapus data user AJAX
+    Route::get('/create_ajax', [AnggotaController::class, 'create_ajax']);   // menampilkan halaman form tambah user AJAX
+    Route::post('/ajax', [AnggotaController::class, 'store_ajax']);         // menampilkan data user baru AJAX
+    Route::get('/{id}/show_ajax', [AnggotaController::class, 'show_ajax']);       // menampilkan detail user AJAX
+    Route::get('/{id}/edit_ajax', [AnggotaController::class, 'edit_ajax']);     // menampilkan form perubahan data user AJAX
+    Route::put('/{id}/update_ajax', [AnggotaController::class, 'update_ajax']);     // menyimpan perubahan data user AJAX
+    Route::get('/{id}/delete_ajax', [AnggotaController::class, 'confirm_ajax']); // menampilkan form confirm delete AJAX
+    Route::delete('/{id}/delete_ajax', [AnggotaController::class, 'delete_ajax']); // menghapus data user AJAX
 });
 
 Route::group(['prefix' => 'kategori'], function () {
