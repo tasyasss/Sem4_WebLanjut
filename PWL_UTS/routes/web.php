@@ -21,9 +21,9 @@ use App\Http\Controllers\BukuController;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
-// Route::group(['prefix' => 'petugas'], function () {
-//     Route::get('/', [PetugasController::class, 'index']);          // menampilkan halaman awal user
-//     Route::post('/list', [PetugasController::class, 'list']);      // menampilkan data user dlm json utk datatables
+Route::group(['prefix' => 'petugas'], function () {
+    Route::get('/', [PetugasController::class, 'index']);          // menampilkan halaman awal user
+    Route::post('/list', [PetugasController::class, 'list']);      // menampilkan data user dlm json utk datatables
 //     Route::get('/create', [PetugasController::class, 'create']);   // menampilkan halaman form tambah user
 //     Route::post('/', [PetugasController::class, 'store']);         // menampilkan data user baru
 //     Route::get('/create_ajax', [PetugasController::class, 'create_ajax']);   // menampilkan halaman form tambah user AJAX
@@ -36,11 +36,11 @@ Route::get('/', [WelcomeController::class, 'index']);
 //     Route::delete('/{id}', [PetugasController::class, 'destroy']); // menghapus data user
 //     Route::get('/{id}/delete_ajax', [PetugasController::class, 'confirm_ajax']); // menampilkan form confirm delete AJAX
 //     Route::delete('/{id}/delete_ajax', [PetugasController::class, 'delete_ajax']); // menghapus data user AJAX
-// });
+});
 
-// Route::group(['prefix' => 'anggota'], function () {
-//     Route::get('/', [AnggotaController::class, 'index']);          // menampilkan halaman awal user
-//     Route::post('/list', [PetugasController::class, 'list']);      // menampilkan data user dlm json utk datatables
+Route::group(['prefix' => 'anggota'], function () {
+    Route::get('/', [AnggotaController::class, 'index']);          // menampilkan halaman awal user
+    Route::post('/list', [AnggotaController::class, 'list']);      // menampilkan data user dlm json utk datatables
 //     Route::get('/create', [AnggotaController::class, 'create']);   // menampilkan halaman form tambah user
 //     Route::post('/', [AnggotaController::class, 'store']);         // menampilkan data user baru
 //     Route::get('/create_ajax', [AnggotaController::class, 'create_ajax']);   // menampilkan halaman form tambah user AJAX
@@ -53,28 +53,11 @@ Route::get('/', [WelcomeController::class, 'index']);
 //     Route::delete('/{id}', [AnggotaController::class, 'destroy']); // menghapus data user
 //     Route::get('/{id}/delete_ajax', [AnggotaController::class, 'confirm_ajax']); // menampilkan form confirm delete AJAX
 //     Route::delete('/{id}/delete_ajax', [AnggotaController::class, 'delete_ajax']); // menghapus data user AJAX
-// });
+});
 
-// Route::group(['prefix' => 'rak'], function () {
-//     Route::get('/',[RakController::class, 'index']);
-//     Route::post('/list',[RakController::class, 'list']);
-//     Route::get('/create',[RakController::class, 'create']);
-//     Route::post('/',[RakController::class, 'store']);
-//     Route::get('/create_ajax', [RakController::class, 'create_ajax']);
-//     Route::post('/ajax', [RakController::class, 'store_ajax']); 
-//     Route::get('/{id}',[RakController::class, 'show']);
-//     Route::get('/{id}/edit',[RakController::class, 'edit']);
-//     Route::put('/{id}',[RakController::class, 'update']);
-//     Route::get('/{id}/edit_ajax', [RakController::class, 'edit_ajax']);     
-//     Route::put('/{id}/update_ajax', [RakController::class, 'update_ajax']); 
-//     Route::delete('/{id}',[RakController::class, 'destroy']);
-//     Route::get('/{id}/delete_ajax', [RakController::class, 'confirm_ajax']);
-//     Route::delete('/{id}/delete_ajax', [RakController::class, 'delete_ajax']);
-// });
-
-// Route::group(['prefix' => 'kategori'], function () {
-//     Route::get('/',[KategoriController::class, 'index']);
-//     Route::post('/list',[KategoriController::class, 'list']);
+Route::group(['prefix' => 'kategori'], function () {
+    Route::get('/',[KategoriController::class, 'index']);
+    Route::post('/list',[KategoriController::class, 'list']);
 //     Route::get('/create',[KategoriController::class, 'create']);
 //     Route::post('/',[KategoriController::class, 'store']);
 //     Route::get('/create_ajax', [KategoriController::class, 'create_ajax']);
@@ -87,11 +70,28 @@ Route::get('/', [WelcomeController::class, 'index']);
 //     Route::delete('/{id}',[KategoriController::class, 'destroy']);
 //     Route::get('/{id}/delete_ajax', [KategoriController::class, 'confirm_ajax']);
 //     Route::delete('/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']);
-// });
+});
 
-// Route::group(['prefix' => 'buku'], function () {
-//     Route::get('/',[BukuController::class, 'index']);
-//     Route::post('/list',[BukuController::class, 'list']);
+Route::group(['prefix' => 'rak'], function () {
+    Route::get('/',[RakController::class, 'index']);
+    Route::post('/list',[RakController::class, 'list']);
+//     Route::get('/create',[RakController::class, 'create']);
+//     Route::post('/',[RakController::class, 'store']);
+//     Route::get('/create_ajax', [RakController::class, 'create_ajax']);
+//     Route::post('/ajax', [RakController::class, 'store_ajax']); 
+//     Route::get('/{id}',[RakController::class, 'show']);
+//     Route::get('/{id}/edit',[RakController::class, 'edit']);
+//     Route::put('/{id}',[RakController::class, 'update']);
+//     Route::get('/{id}/edit_ajax', [RakController::class, 'edit_ajax']);     
+//     Route::put('/{id}/update_ajax', [RakController::class, 'update_ajax']); 
+//     Route::delete('/{id}',[RakController::class, 'destroy']);
+//     Route::get('/{id}/delete_ajax', [RakController::class, 'confirm_ajax']);
+//     Route::delete('/{id}/delete_ajax', [RakController::class, 'delete_ajax']);
+});
+
+Route::group(['prefix' => 'buku'], function () {
+    Route::get('/',[BukuController::class, 'index']);
+    Route::post('/list',[BukuController::class, 'list']);
 //     Route::get('/create',[BukuController::class, 'create']);
 //     Route::post('/',[BukuController::class, 'store']);
 //     Route::get('/create_ajax', [BukuController::class, 'create_ajax']);
@@ -103,5 +103,5 @@ Route::get('/', [WelcomeController::class, 'index']);
 //     Route::put('/{id}',[BukuController::class, 'update']);
 //     Route::delete('/{id}',[BukuController::class, 'destroy']);
 //     Route::get('/{id}/delete_ajax', [BukuController::class, 'confirm_ajax']);
-//     Route::delete('/{id}/delete_ajax', [BukuController::class, 'delete_ajax']);
-// });
+    // Route::delete('/{id}/delete_ajax', [BukuController::class, 'delete_ajax']);
+});

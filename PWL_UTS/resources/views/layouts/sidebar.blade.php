@@ -26,15 +26,15 @@
             <!-- Data Pengguna -->
             <li class="nav-header">Data Pengguna</li>
             <li class="nav-item">
-                <a href="{{ url('/level') }}" class="nav-link {{ $activeMenu == 'level' ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-layer-group"></i>
-                    <p>Level User</p>
+                <a href="{{ url('/petugas') }}" class="nav-link {{ $activeMenu == 'petugas' ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-id-card"></i>
+                    <p>Data Petugas</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/user') }}" class="nav-link {{ $activeMenu == 'user' ? 'active' : '' }}">
-                    <i class="nav-icon far fa-user"></i>
-                    <p>Data User</p>
+                <a href="{{ url('/anggota') }}" class="nav-link {{ $activeMenu == 'anggota' ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Data Anggota</p>
                 </a>
             </li>
 
@@ -43,36 +43,36 @@
             <li class="nav-item">
                 <a href="{{ url('/kategori') }}" class="nav-link {{ $activeMenu == 'kategori' ? 'active' : '' }}">
                     <i class="nav-icon far fa-bookmark"></i>
-                    <p>Kategori Barang</p>
+                    <p>Kategori Buku</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/barang') }}" class="nav-link {{ $activeMenu == 'barang' ? 'active' : '' }}">
-                    <i class="nav-icon far fa-list-alt"></i>
-                    <p>Data Barang</p>
+                <a href="{{ url('/rak') }}" class="nav-link {{ $activeMenu == 'rak' ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-layer-group"></i>
+                    <p>Rak Buku</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/supplier') }}" class="nav-link {{ $activeMenu == 'supplier' ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-users"></i>
-                    <p>Data Supplier</p>
+                <a href="{{ url('/buku') }}" class="nav-link {{ $activeMenu == 'buku' ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-book"></i>
+                    <p>Data Buku</p>
                 </a>
             </li>
 
             <!-- Data Transaksi -->
             <li class="nav-header">Data Transaksi</li>
             <li class="nav-item">
-                <a href="{{ url('/stok') }}" class="nav-link {{ $activeMenu == 'stok' ? 'active' : '' }}">
+                <a href="{{ url('/peminjaman') }}" class="nav-link {{ $activeMenu == 'peminjaman' ? 'active' : '' }}">
                     <i class="nav-icon fas fa-cubes"></i>
-                    <p>Stok Barang</p>
+                    <p>Peminjaman Buku</p>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{{ url('/barang') }}" class="nav-link {{ $activeMenu == 'penjualan' ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-cash-register"></i>
+                    <i class="nav-icon fas fa-management"></i>
                     <p>Transaksi Penjualan</p>
                 </a>
-            </li>
+            </li> --}}
 
         </ul>
     </nav>
