@@ -15,6 +15,7 @@ class PetugasModel extends Model
     protected $fillable = [
         'petugas_nomor',
         'petugas_nama',
+        'email',
         'username',
         'password'
     ];

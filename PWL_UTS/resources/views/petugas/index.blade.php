@@ -5,7 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('petugas/create') }}">Tambah</a>
+                {{-- <a class="btn btn-sm btn-primary mt-1" href="{{ url('petugas/create') }}">Tambah</a> --}}
                 <button onclick="modalAction('{{ url('petugas/create_ajax') }}')" class="btn btn-sm btn-success mt-1">
                     Tambah Ajax</button>
             </div>
@@ -23,6 +23,8 @@
                         <th>ID</th>
                         <th>Nomor Petugas</th>
                         <th>Nama Petugas</th>
+                        <th>Email</th>
+                        <th>Username</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -68,6 +70,16 @@
                         data: "petugas_nama",
                         orderable: true,
                         searchable: true
+                    },
+                    {
+                        data: "email",
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "username",
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: "aksi",
