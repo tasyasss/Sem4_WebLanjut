@@ -70,18 +70,13 @@ Route::group(['prefix' => 'rak'], function () {
 });
 
 Route::group(['prefix' => 'buku'], function () {
-    Route::get('/',[BukuController::class, 'index']);
-    Route::post('/list',[BukuController::class, 'list']);
-//     Route::get('/create',[BukuController::class, 'create']);
-//     Route::post('/',[BukuController::class, 'store']);
-//     Route::get('/create_ajax', [BukuController::class, 'create_ajax']);
-//     Route::post('/ajax', [BukuController::class, 'store_ajax']); 
-//     Route::get('/{id}',[BukuController::class, 'show']);
-//     Route::get('/{id}/edit',[BukuController::class, 'edit']);
-//     Route::get('/{id}/edit_ajax', [BukuController::class, 'edit_ajax']);     
-//     Route::put('/{id}/update_ajax', [BukuController::class, 'update_ajax']); 
-//     Route::put('/{id}',[BukuController::class, 'update']);
-//     Route::delete('/{id}',[BukuController::class, 'destroy']);
-//     Route::get('/{id}/delete_ajax', [BukuController::class, 'confirm_ajax']);
-    // Route::delete('/{id}/delete_ajax', [BukuController::class, 'delete_ajax']);
+    Route::get('/', [BukuController::class, 'index']);          // menampilkan halaman awal buku
+    Route::post('/list', [BukuController::class, 'list']);      // menampilkan data buku dlm json utk datatables
+    Route::get('/create_ajax', [BukuController::class, 'create_ajax']);   // menampilkan halaman form tambah buku AJAX
+    Route::post('/ajax', [BukuController::class, 'store_ajax']);         // menampilkan data buku baru AJAX
+    Route::get('/{id}/show_ajax', [BukuController::class, 'show_ajax']);       // menampilkan detail buku AJAX
+    Route::get('/{id}/edit_ajax', [BukuController::class, 'edit_ajax']);     // menampilkan form perubahan data buku AJAX
+    Route::put('/{id}/update_ajax', [BukuController::class, 'update_ajax']);     // menyimpan perubahan data buku AJAX
+    Route::get('/{id}/delete_ajax', [BukuController::class, 'confirm_ajax']); // menampilkan form confirm delete AJAX
+    Route::delete('/{id}/delete_ajax', [BukuController::class, 'delete_ajax']); // menghapus data buku AJAX
 });
