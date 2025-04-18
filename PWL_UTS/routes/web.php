@@ -58,20 +58,15 @@ Route::group(['prefix' => 'kategori'], function () {
 });
 
 Route::group(['prefix' => 'rak'], function () {
-    Route::get('/',[RakController::class, 'index']);
-    Route::post('/list',[RakController::class, 'list']);
-//     Route::get('/create',[RakController::class, 'create']);
-//     Route::post('/',[RakController::class, 'store']);
-//     Route::get('/create_ajax', [RakController::class, 'create_ajax']);
-//     Route::post('/ajax', [RakController::class, 'store_ajax']); 
-//     Route::get('/{id}',[RakController::class, 'show']);
-//     Route::get('/{id}/edit',[RakController::class, 'edit']);
-//     Route::put('/{id}',[RakController::class, 'update']);
-//     Route::get('/{id}/edit_ajax', [RakController::class, 'edit_ajax']);     
-//     Route::put('/{id}/update_ajax', [RakController::class, 'update_ajax']); 
-//     Route::delete('/{id}',[RakController::class, 'destroy']);
-//     Route::get('/{id}/delete_ajax', [RakController::class, 'confirm_ajax']);
-//     Route::delete('/{id}/delete_ajax', [RakController::class, 'delete_ajax']);
+    Route::get('/', [RakController::class, 'index']);          // menampilkan halaman awal rak
+    Route::post('/list', [RakController::class, 'list']);      // menampilkan data rak dlm json utk datatables
+    Route::get('/create_ajax', [RakController::class, 'create_ajax']);   // menampilkan halaman form tambah rak AJAX
+    Route::post('/ajax', [RakController::class, 'store_ajax']);         // menampilkan data rak baru AJAX
+    Route::get('/{id}/show_ajax', [RakController::class, 'show_ajax']);       // menampilkan detail rak AJAX
+    Route::get('/{id}/edit_ajax', [RakController::class, 'edit_ajax']);     // menampilkan form perubahan data rak AJAX
+    Route::put('/{id}/update_ajax', [RakController::class, 'update_ajax']);     // menyimpan perubahan data rak AJAX
+    Route::get('/{id}/delete_ajax', [RakController::class, 'confirm_ajax']); // menampilkan form confirm delete AJAX
+    Route::delete('/{id}/delete_ajax', [RakController::class, 'delete_ajax']); // menghapus data rak AJAX
 });
 
 Route::group(['prefix' => 'buku'], function () {
