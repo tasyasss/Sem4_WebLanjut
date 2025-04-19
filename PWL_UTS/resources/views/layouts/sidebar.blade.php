@@ -62,7 +62,7 @@
             <!-- Data Transaksi -->
             <li class="nav-header">Data Transaksi</li>
             <li class="nav-item">
-                <a href="{{ url('/peminjaman') }}" class="nav-link {{ $activeMenu == 'peminjaman' ? 'active' : '' }}">
+                <a href="{{ url('/pinjam') }}" class="nav-link {{ $activeMenu == 'pinjam' ? 'active' : '' }}">
                     <i class="nav-icon fas fa-cubes"></i>
                     <p>Peminjaman Buku</p>
                 </a>

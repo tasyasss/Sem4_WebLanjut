@@ -7,6 +7,7 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\RakController;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\PinjamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,4 +80,16 @@ Route::group(['prefix' => 'buku'], function () {
     Route::put('/{id}/update_ajax', [BukuController::class, 'update_ajax']);     // menyimpan perubahan data buku AJAX
     Route::get('/{id}/delete_ajax', [BukuController::class, 'confirm_ajax']); // menampilkan form confirm delete AJAX
     Route::delete('/{id}/delete_ajax', [BukuController::class, 'delete_ajax']); // menghapus data buku AJAX
+});
+
+Route::group(['prefix' => 'pinjam'], function () {
+    Route::get('/', [PinjamController::class, 'index']);          // menampilkan halaman awal peminjaman
+    Route::post('/list', [PinjamController::class, 'list']);      // menampilkan data peminjaman dlm json utk datatables
+    Route::get('/create_ajax', [PinjamController::class, 'create_ajax']);   // menampilkan halaman form tambah peminjaman AJAX
+    Route::post('/ajax', [PinjamController::class, 'store_ajax']);         // menampilkan data peminjaman baru AJAX
+    Route::get('/{id}/show_ajax', [PinjamController::class, 'show_ajax']);       // menampilkan detail peminjaman AJAX
+    Route::get('/{id}/edit_ajax', [PinjamController::class, 'edit_ajax']);     // menampilkan form perubahan data peminjaman AJAX
+    Route::put('/{id}/update_ajax', [PinjamController::class, 'update_ajax']);     // menyimpan perubahan data peminjaman AJAX
+    Route::get('/{id}/delete_ajax', [PinjamController::class, 'confirm_ajax']); // menampilkan form confirm delete AJAX
+    Route::delete('/{id}/delete_ajax', [PinjamController::class, 'delete_ajax']); // menghapus data peminjaman AJAX
 });
