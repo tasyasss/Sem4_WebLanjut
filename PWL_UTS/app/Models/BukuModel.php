@@ -21,11 +21,13 @@ class BukuModel extends Model
         'tahun_terbit',
     ];
 
+     // Relasi ke tabel kategori
     public function kategori(): BelongsTo
     {
         return $this->belongsTo(KategoriModel::class, 'kategori_id', 'kategori_id');
     }
 
+     // Relasi ke tabel rak
     public function rak(): BelongsTo
     {
         return $this->belongsTo(RakModel::class, 'rak_id', 'rak_id');

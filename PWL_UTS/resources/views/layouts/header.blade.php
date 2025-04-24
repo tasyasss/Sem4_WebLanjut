@@ -1,3 +1,4 @@
+{{-- Navbar utama yang memuat tautan navigasi, fitur pencarian, pesan, notifikasi, dan kontrol tampilan aplikasi AdminLTE --}}
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">

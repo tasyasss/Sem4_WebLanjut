@@ -11,7 +11,8 @@ use App\Models\BukuModel;
 
 class BukuController extends Controller
 {
-    public function index() // menampilkan halaman awal buku
+    // Menampilkan halaman awal daftar buku
+    public function index() 
     {
         $breadcrumb = (object) [
             'title' => 'Daftar Buku',
@@ -31,9 +32,10 @@ class BukuController extends Controller
         'kategori' => $kategori, 'rak' => $rak, 'activeMenu' => $activeMenu]);
     }
 
-    // menampilkan data buku dlm json utk datatables
+    // Mengambil data buku dan mengembalikannya dalam format DataTables
     public function list(Request $request)
     {
+        // Mengambil data buku yang dibutuhkan
         $buku1 = BukuModel::select('buku_id', 'buku_kode', 'buku_judul', 'buku_penulis', 
         'buku_penerbit', 'tahun_terbit', 'kategori_id', 'rak_id')->with('kategori', 'rak');
         
@@ -47,6 +49,7 @@ class BukuController extends Controller
             $buku1->where('rak_id', $request->rak_id);
         }
 
+        // Mengembalikan data buku dalam format DataTables
         return DataTables::of($buku1)
             // menambahkan kolom index
             ->addIndexColumn()
@@ -61,6 +64,7 @@ class BukuController extends Controller
             ->make(true);
     }
 
+    // Menampilkan form untuk menambah buku via AJAX
     public function create_ajax()
     {
         $kategori = KategoriModel::select('kategori_id', 'kategori_nama')->get(); 
@@ -68,9 +72,11 @@ class BukuController extends Controller
         return view('buku.create_ajax')->with('kategori', $kategori)->with('rak', $rak);
     }
 
+    // Menyimpan data buku baru melalui AJAX setelah validasi
     public function store_ajax(Request $request)
     {
         if($request->ajax() || $request->wantsJson()) {
+            // Definisi aturan validasi
             $rules = [
                  'kategori_id'   => 'required|integer',
                  'rak_id'        => 'required|integer',
@@ -81,9 +87,11 @@ class BukuController extends Controller
                  'tahun_terbit'  => 'required|digits:4|integer'
             ];
  
+            // Melakukan validasi terhadap input
             $validator = Validator::make($request->all(), $rules);
  
             if ($validator->fails()) {
+                // Mengembalikan response jika validasi gagal
                 return response()->json([
                     'status' => false, //response status
                     'message' => 'Validasi Gagal',
@@ -91,6 +99,7 @@ class BukuController extends Controller
                 ]);
             }
  
+            // Menyimpan data buku baru ke database
             BukuModel::create([
                 'kategori_id'    => $request->kategori_id,
                 'rak_id'         => $request->rak_id,
@@ -108,6 +117,7 @@ class BukuController extends Controller
         redirect('/');
     }
 
+    // Menampilkan detail buku berdasarkan ID
     public function show_ajax(string $id)
     {
         $buku = BukuModel::with('kategori', 'rak')->find($id);
@@ -116,7 +126,7 @@ class BukuController extends Controller
         ]);
     }
 
-
+    // Menampilkan form edit buku berdasarkan ID
     public function edit_ajax(string $id)
     {
         $buku = BukuModel::find($id);
@@ -125,6 +135,7 @@ class BukuController extends Controller
         return view('buku.edit_ajax',['buku' => $buku, 'kategori' => $kategori, 'rak' => $rak]);
     }
 
+    // Menyimpan perubahan data buku melalui AJAX
     public function update_ajax(Request $request, $id){
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
@@ -146,6 +157,7 @@ class BukuController extends Controller
                     'msgField' => $validator->errors() // menunjukkan field mana yang error
                 ]);
             }
+            // Mencari buku berdasarkan ID dan memperbarui datanya
             $check = BukuModel::find($id);
             if ($check) {
                 $check->update([
@@ -171,12 +183,14 @@ class BukuController extends Controller
         return redirect('/');
     }
 
+    // Menampilkan konfirmasi penghapusan buku berdasarkan ID
     public function confirm_ajax(string $id)    
     {
         $buku = BukuModel::find($id);
         return view('buku.confirm_ajax', ['buku' => $buku]);
     }
 
+    // Menghapus anggota berdasarkan ID
     public function delete_ajax(Request $request, $id)
     {
         // cek apakah request dari ajax

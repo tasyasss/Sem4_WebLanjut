@@ -10,7 +10,10 @@ use App\Models\PetugasModel;
 
 class PetugasController extends Controller
 {
-    public function index() // menampilkan halaman awal petugas
+    /**
+     * Menampilkan halaman utama daftar petugas.
+     */
+    public function index()
     {
         $breadcrumb = (object) [
             'title' => 'Daftar Petugas',
@@ -21,27 +24,29 @@ class PetugasController extends Controller
             'title' => 'Daftar Petugas yang terdaftar',
         ];
 
-        $activeMenu = 'petugas'; // set menu yg sedang aktif
-
         return view('petugas.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
-            'activeMenu' => $activeMenu
+            'activeMenu' => 'petugas'
         ]);
     }
 
+    /**
+     * Mengembalikan data petugas dalam format DataTables.
+     */
     public function list(Request $request)
     {
-        $petugas1 = PetugasModel::select('petugas_id', 'petugas_nomor', 'petugas_nama', 'email', 'username');
+        $petugas = PetugasModel::select('petugas_id', 'petugas_nomor', 'petugas_nama', 'email', 'username');
 
-        return DataTables::of($petugas1)
+        return DataTables::of($petugas)
             ->addIndexColumn()
             ->addColumn('aksi', function ($petugas) {
-                $btn =  '<button onclick="modalAction(\'' . url('/petugas/' . $petugas->petugas_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/petugas/' . $petugas->petugas_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/petugas/' . $petugas->petugas_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
-
-                return $btn;
+                $urlBase = url('/petugas/' . $petugas->petugas_id);
+                return '
+                    <button onclick="modalAction(\'' . $urlBase . '/show_ajax\')" class="btn btn-info btn-sm">Detail</button>
+                    <button onclick="modalAction(\'' . $urlBase . '/edit_ajax\')" class="btn btn-warning btn-sm">Edit</button>
+                    <button onclick="modalAction(\'' . $urlBase . '/delete_ajax\')" class="btn btn-danger btn-sm">Hapus</button>
+                ';
             })
             ->rawColumns(['aksi'])
             ->make(true);
@@ -52,24 +57,25 @@ class PetugasController extends Controller
         return view('petugas.create_ajax');
     }
 
+    /**
+     * Menyimpan data petugas baru dari request AJAX.
+     */
     public function store_ajax(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
-            $rules = [
+            $validator = Validator::make($request->all(), [
                 'petugas_nomor' => 'required|string|min:5|unique:m_petugas,petugas_nomor',
                 'petugas_nama'  => 'required|string|max:50',
                 'email'         => 'required|string|max:50',
                 'username'      => 'required|string|max:20',
                 'password'      => 'required|min:5'
-            ];
-
-            $validator = Validator::make($request->all(), $rules);
+            ]);
 
             if ($validator->fails()) {
                 return response()->json([
-                    'status' => false, //response status
+                    'status' => false,
                     'message' => 'Validasi Gagal',
-                    'msgField' => $validator->errors(), //pesan error validasi
+                    'msgField' => $validator->errors()
                 ]);
             }
 
@@ -80,93 +86,107 @@ class PetugasController extends Controller
                 'username'      => $request->username,
                 'password'      => Hash::make($request->password),
             ]);
+
             return response()->json([
                 'status' => true,
                 'message' => 'Data petugas berhasil disimpan'
             ]);
         }
-        redirect('/');
+
+        return redirect('/');
     }
 
     public function show_ajax(string $id)
     {
         $petugas = PetugasModel::find($id);
+
         return view('petugas.show_ajax', [
             'petugas' => $petugas
         ]);
     }
 
-
     public function edit_ajax(string $id)
     {
         $petugas = PetugasModel::find($id);
+
         return view('petugas.edit_ajax', ['petugas' => $petugas]);
     }
 
+    /**
+     * Memperbarui data petugas berdasarkan request AJAX.
+     */
     public function update_ajax(Request $request, $id)
     {
-        // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
-            $rules = [
-                'petugas_nomor' => 'required|string|min:5|unique:m_petugas,petugas_nomor',
+            $validator = Validator::make($request->all(), [
+                'petugas_nomor' => 'required|string|min:5|unique:m_petugas,petugas_nomor,' . $id . ',petugas_id',
                 'petugas_nama'  => 'required|string|max:50',
                 'email'         => 'required|string|max:50',
                 'username'      => 'required|string|max:20|unique:m_petugas,username,' . $id . ',petugas_id',
                 'password'      => 'nullable|min:5'
-            ];
-            // use Illuminate\Support\Facades\Validator;
-            $validator = Validator::make($request->all(), $rules);
+            ]);
+
             if ($validator->fails()) {
                 return response()->json([
-                    'status' => false, // respon json, true: berhasil, false: gagal
+                    'status' => false,
                     'message' => 'Validasi gagal.',
-                    'msgField' => $validator->errors() // menunjukkan field mana yang error
+                    'msgField' => $validator->errors()
                 ]);
             }
-            $check = PetugasModel::find($id);
-            if ($check) {
-                if (!$request->filled('password')) { // jika password tidak diisi, maka hapus dari req
-                    $request->request->remove('password');
+
+            $petugas = PetugasModel::find($id);
+
+            if ($petugas) {
+                $data = $request->except(['password']);
+                if ($request->filled('password')) {
+                    $data['password'] = Hash::make($request->password);
                 }
-                $check->update($request->all());
+                $petugas->update($data);
+
                 return response()->json([
                     'status' => true,
                     'message' => 'Data berhasil diupdate'
                 ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Data tidak ditemukan'
-                ]);
             }
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
         }
+
         return redirect('/');
     }
 
     public function confirm_ajax(string $id)
     {
         $petugas = PetugasModel::find($id);
+
         return view('petugas.confirm_ajax', ['petugas' => $petugas]);
     }
 
+    /**
+     * Menghapus data petugas berdasarkan request AJAX.
+     */
     public function delete_ajax(Request $request, $id)
     {
-        // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
             $petugas = PetugasModel::find($id);
+
             if ($petugas) {
                 $petugas->delete();
                 return response()->json([
                     'status' => true,
                     'message' => 'Data berhasil dihapus'
                 ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Data tidak ditemukan'
-                ]);
             }
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
         }
+
         return redirect('/');
     }
 }

@@ -1,10 +1,11 @@
 @empty($anggota)
+    <!-- Menampilkan modal kesalahan jika data anggota tidak ditemukan -->
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
 
-                <button type="button" class="close" data-dismiss="modal" aria- label="Close"><span
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
@@ -17,6 +18,7 @@
         </div>
     </div>
 @else
+    <!-- Menampilkan form edit jika anggota ditemukan -->
     <form action="{{ url('/anggota/' . $anggota->anggota_id . '/update_ajax') }}" method="POST" id="form-edit">
         @csrf
         @method('PUT')
@@ -24,11 +26,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Data Anggota</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria- label="Close"><span
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
 
                 <div class="modal-body">
+                    <!-- Input untuk Nomor Anggota -->
                     <div class="form-group">
                         <label>Nomor Anggota</label>
                         <input value="{{ $anggota->anggota_nomor }}" type="text" name="anggota_nomor" id="anggota_nomor"
@@ -36,6 +39,7 @@
                         <small id="error-anggota_nomor" class="error-text form-text text-danger"></small>
                     </div>
 
+                    <!-- Input untuk Nama Anggota -->
                     <div class="form-group">
                         <label>Nama Anggota</label>
                         <input value="{{ $anggota->anggota_nama }}" type="text" name="anggota_nama" id="anggota_nama"
@@ -43,6 +47,7 @@
                         <small id="error-anggota_nama" class="error-text form-text text-danger"></small>
                     </div>
                     
+                    <!-- Input untuk Alamat -->
                     <div class="form-group">
                         <label>Alamat</label>
                         <input value="{{ $anggota->alamat }}" type="text" name="alamat" id="alamat"
@@ -50,6 +55,7 @@
                         <small id="error-alamat" class="error-text form-text text-danger"></small>
                     </div>
                     
+                    <!-- Input untuk No. HP -->
                     <div class="form-group">
                         <label>No. HP</label>
                         <input value="{{ $anggota->no_hp }}" type="text" name="no_hp" id="no_hp"
@@ -57,6 +63,7 @@
                         <small id="error-no_hp" class="error-text form-text text-danger"></small>
                     </div>
                     
+                    <!-- Input untuk Email -->
                     <div class="form-group">
                         <label>Email</label>
                         <input value="{{ $anggota->email }}" type="text" name="email" id="email"
@@ -72,6 +79,8 @@
             </div>
         </div>
     </form>
+
+    <!-- Validasi form menggunakan jQuery Validate -->
     <script>
         $(document).ready(function() {
             $("#form-edit").validate({
@@ -99,6 +108,7 @@
                     }
                 },
                 submitHandler: function(form) {
+                    // Kirim data menggunakan AJAX
                     $.ajax({
                         url: form.action,
                         type: form.method,
@@ -106,14 +116,17 @@
                         success: function(response) {
                             if (response.status) {
                                 $('#myModal').modal('hide');
+                                // Tampilkan pesan sukses
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil',
                                     text: response.message
                                 });
+                                // Reload data anggota
                                 dataAnggota.ajax.reload();
                             } else {
                                 $('.error-text').text('');
+                                // Menampilkan pesan kesalahan pada masing-masing field
                                 $.each(response.msgField, function(prefix, val) {
                                     $('#error-' + prefix).text(val[0]);
                                 });

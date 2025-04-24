@@ -7,7 +7,7 @@
      public function index()
      {
          $breadcrumb = (object) [
-             'title' => 'Selamat Datang',
+             'title' => 'Selamat Datang di Pinjem.inBook',
              'list' => ['Home', 'Selamat Datang']
          ];
  

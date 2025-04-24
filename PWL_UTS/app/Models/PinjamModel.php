@@ -19,16 +19,19 @@ class PinjamModel extends Model
         'buku_id'
     ];
 
+     // Relasi ke tabel petugas
     public function petugas(): BelongsTo
     {
         return $this->belongsTo(PetugasModel::class, 'petugas_id', 'petugas_id');
     }
 
+     // Relasi ke tabel anggota
     public function anggota(): BelongsTo
     {
         return $this->belongsTo(AnggotaModel::class, 'anggota_id', 'anggota_id');
     }
 
+     // Relasi ke tabel buku
     public function buku(): BelongsTo
     {
         return $this->belongsTo(BukuModel::class, 'buku_id', 'buku_id');

@@ -1,4 +1,5 @@
 @empty($anggota)
+    <!-- Jika data anggota kosong / tidak ditemukan -->
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,11 +12,13 @@
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan
                 </div>
+                <!-- Tombol kembali ke halaman anggota -->
                 <a href="{{ url('/anggota') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
+    <!-- Form konfirmasi hapus anggota -->
     <form action="{{ url('/anggota/' . $anggota->anggota_id . '/delete_ajax') }}" method="POST" id="form-delete">
         @csrf
         @method('DELETE')
@@ -31,6 +34,7 @@
                         <h5><i class="icon fas fa-ban"></i> Konfirmasi !!!</h5>
                         Apakah Anda ingin menghapus data seperti di bawah ini?
                     </div>
+                    <!-- Tabel detail anggota yang akan dihapus -->
                     <table class="table table-sm table-bordered table-striped">
                         <tr>
                             <th class="text-right col-3">Nomor Anggota :</th>
@@ -41,7 +45,7 @@
                             <th class="text-right col-3">Nama Anggota :</th>
                             <td class="col-9">{{ $anggota->anggota_nama }}</td>
                         </tr>
-                        
+
                         <tr>
                             <th class="text-right col-3">Alamat :</th>
                             <td class="col-9">{{ $anggota->alamat }}</td>
@@ -51,7 +55,7 @@
                             <th class="text-right col-3">No. HP :</th>
                             <td class="col-9">{{ $anggota->no_hp }}</td>
                         </tr>
-                        
+
                         <tr>
                             <th class="text-right col-3">Email :</th>
                             <td class="col-9">{{ $anggota->email }}</td>
@@ -59,12 +63,15 @@
                     </table>
                 </div>
                 <div class="modal-footer">
+                    <!-- Tombol batal dan hapus -->
                     <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
                     <button type="submit" class="btn btn-primary">Ya, Hapus</button>
                 </div>
             </div>
         </div>
     </form>
+
+    <!-- Script validasi dan ajax untuk submit form hapus -->
     <script>
         $(document).ready(function() {
             $("#form-delete").validate({
@@ -76,6 +83,7 @@
                         data: $(form).serialize(),
                         success: function(response) {
                             if (response.status) {
+                                // Jika berhasil, tutup modal dan reload DataTable
                                 $('#myModal').modal('hide');
                                 Swal.fire({
                                     icon: 'success',
@@ -84,6 +92,7 @@
                                 });
                                 dataAnggota.ajax.reload();
                             } else {
+                                // Jika gagal validasi atau error
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {
                                     $('#error-' + prefix).text(val[0]);

@@ -1,3 +1,4 @@
+{{-- Sidebar navigasi utama dengan fitur pencarian dan menu untuk dashboard, data pengguna, data barang, dan transaksi --}}
 <div class="sidebar">
     <!-- SidebarSearch Form -->
     <div class="form-inline mt-2">
@@ -67,13 +68,6 @@
                     <p>Peminjaman Buku</p>
                 </a>
             </li>
-            {{-- <li class="nav-item">
-                <a href="{{ url('/barang') }}" class="nav-link {{ $activeMenu == 'penjualan' ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-management"></i>
-                    <p>Transaksi Penjualan</p>
-                </a>
-            </li> --}}
-
         </ul>
     </nav>
 </div>

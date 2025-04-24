@@ -1,3 +1,4 @@
+{{-- Menampilkan judul halaman dan navigasi breadcrumb berdasarkan data dinamis dari variabel $breadcrumb --}}
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -10,8 +11,7 @@
                         @if ($key == count($breadcrumb->list) - 1)
                             <li class="breadcrumb-item active">{{ $value }}</li>
                         @else
-                            <li class="breadcrumb-item">{{ $value }}</a">
-                            </li>
+                            <li class="breadcrumb-item">{{ $value }}</li>
                         @endif
                     @endforeach
                 </ol>
