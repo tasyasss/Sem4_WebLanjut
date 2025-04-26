@@ -74,6 +74,15 @@
                 </a>
             </li>
 
+            <!-- Logout -->
+            <li class="nav-header">Akhiri Sesi</li>
+            <li class="nav-item">
+                <a href="{{ url('/logout') }}" class="nav-link {{ $activeMenu == 'stok' ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-power-off"></i>
+                    <p>Log Out</p>
+                </a>
+            </li>
+
         </ul>
     </nav>
 </div>
