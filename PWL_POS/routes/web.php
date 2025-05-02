@@ -28,8 +28,10 @@ Route::pattern('id', '[0-9]+'); // jika ada parameter id harus berupa angka
  
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'postlogin']);
-Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');   
- 
+Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');    
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('register', [AuthController::class, 'postRegister']);
+
 Route::middleware('auth')->group(function () { // route di bawah ini hanya bisa diakses ketika sudah login
     Route::get('/', [WelcomeController::class, 'index']);
     
