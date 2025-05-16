@@ -6,6 +6,7 @@ use App\Models\SupplierModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class SupplierController extends Controller
 {
@@ -246,5 +247,72 @@ class SupplierController extends Controller
             }
         }
         return redirect('/');
+    }
+
+    public function import()
+    {
+        return view('supplier.import');
+    }
+
+    public function import_ajax(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'file_supplier' => ['required', 'mimes:xlsx,xls', 'max:1024'],
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            try {
+                $file = $request->file('file_supplier');
+                $spreadsheet = IOFactory::load($file->getRealPath());
+                $sheet = $spreadsheet->getActiveSheet();
+                $rows = $sheet->toArray();
+
+                $insert = [];
+                $header = array_shift($rows); // Ambil header
+
+                foreach ($rows as $row) {
+                    if (!empty($row[0])) {
+                        $insert[] = [
+                            'supplier_kode' => $row[0],
+                            'supplier_nama' => $row[1],
+                            'created_at' => now(),
+                        ];
+                    }
+                }
+
+                if (!empty($insert)) {
+                    SupplierModel::insertOrIgnore($insert);
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Data Supplier berhasil diimport: ' . count($insert) . ' record'
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Tidak ada data yang diimport'
+                    ]);
+                }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                ]);
+            }
+        }
+        
+        return response()->json([
+            'status' => false,
+            'message' => 'Request tidak valid'
+        ]);
     }
 }

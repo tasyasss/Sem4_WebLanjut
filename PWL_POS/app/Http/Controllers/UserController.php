@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 use function Symfony\Component\String\b;
 
@@ -284,5 +285,74 @@ class UserController extends Controller
             }
         }
         return redirect('/');
+    }
+
+    public function import()
+    {
+        return view('user.import');
+    }
+
+    public function import_ajax(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'file_user' => ['required', 'mimes:xlsx,xls', 'max:1024'],
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            try {
+                $file = $request->file('file_user');
+                $spreadsheet = IOFactory::load($file->getRealPath());
+                $sheet = $spreadsheet->getActiveSheet();
+                $rows = $sheet->toArray();
+
+                $insert = [];
+                $header = array_shift($rows); // Ambil header
+
+                foreach ($rows as $row) {
+                    if (!empty($row[0])) {
+                        $insert[] = [
+                            'level_id' => $row[0],
+                            'username' => $row[1],
+                            'nama' => $row[2],
+                            'password' => bcrypt($row[3]),
+                            'created_at' => now(),
+                        ];
+                    }
+                }
+
+                if (!empty($insert)) {
+                    userModel::insertOrIgnore($insert);
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Data user berhasil diimport: ' . count($insert) . ' record'
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Tidak ada data yang diimport'
+                    ]);
+                }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                ]);
+            }
+        }
+        
+        return response()->json([
+            'status' => false,
+            'message' => 'Request tidak valid'
+        ]);
     }
 }
