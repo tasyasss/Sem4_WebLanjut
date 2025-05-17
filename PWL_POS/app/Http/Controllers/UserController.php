@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use function Symfony\Component\String\b;
 
@@ -405,5 +406,22 @@ class UserController extends Controller
         header('Pragma: no-cache');
         $writer->save('php://output');
         exit;
+    }
+
+    public function export_pdf()
+    {
+        ini_set('max_execution_time', 120); // Perpanjang waktu eksekusi
+
+        $user = UserModel::select('level_id', 'username', 'nama')
+            ->orderBy('level_id')
+            ->with('level')
+            ->limit(500) // Boleh dihapus jika sudah aman
+            ->get();
+
+        $pdf = Pdf::loadView('user.export_pdf', ['user' => $user]);
+        $pdf->setPaper('a4', 'portrait');
+        $pdf->setOption("isRemoteEnabled", true); // tetap aktif jika ada gambar via URL
+
+        return $pdf->stream('Data User (' . date('Y-m-d H:i:s') . ').pdf');
     }
 }
