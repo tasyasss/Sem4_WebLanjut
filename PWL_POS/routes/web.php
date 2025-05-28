@@ -7,6 +7,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -147,6 +148,13 @@ Route::middleware('auth')->group(function () { // route di bawah ini hanya bisa 
             Route::post('/import_ajax', [SupplierController::class, 'import_ajax']); //ajax import excel
             Route::get('/export_excel',[SupplierController::class, 'export_excel']); // export excel
             Route::get('/export_pdf',[SupplierController::class, 'export_pdf']); // export pdf
+        });
+    });
+
+    Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
+        Route::group(['prefix' => 'profile'], function () {
+            Route::get('/', [ProfileController::class, 'index']);
+            Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
         });
     });
 });

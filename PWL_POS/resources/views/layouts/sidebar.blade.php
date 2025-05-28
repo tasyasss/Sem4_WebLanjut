@@ -74,6 +74,13 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a href="{{ url('/profile') }}" class="nav-link {{ $activeMenu == 'profile' ? 'active' : '' }} ">
+                    <i class="nav-icon fas fa-camera"></i>
+                    <p>Profile</p>
+                </a>
+            </li>
+            
             <!-- Logout -->
             <li class="nav-header">Akhiri Sesi</li>
             <li class="nav-item">
