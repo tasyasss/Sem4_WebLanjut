@@ -44,6 +44,7 @@ Route::post('barangs', [\App\Http\Controllers\Api\BarangController::class, 'stor
 Route::get('barangs/{barang}', [\App\Http\Controllers\Api\BarangController::class, 'show']);
 Route::put('barangs/{barang}', [\App\Http\Controllers\Api\BarangController::class, 'update']);
 Route::delete('barangs/{barang}', [\App\Http\Controllers\Api\BarangController::class, 'destroy']);
+Route::post('barangs1', [\App\Http\Controllers\Api\BarangController::class, 'store']);
 
 Route::get('kategoris', [\App\Http\Controllers\Api\KategoriController::class, 'index']);
 Route::post('kategoris', [\App\Http\Controllers\Api\KategoriController::class, 'store']);
